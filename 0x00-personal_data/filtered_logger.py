@@ -50,7 +50,7 @@ def get_logger() -> logging.Logger:
     # Set StreamHandler
     streamHandler = logging.StreamHandler()
     streamHandler.setFormatter(RedactingFormatter(list(PII_FIELDS)))
-    logger.addHandler(stream_handler)
+    logger.addHandler(streamHandler)
 
     return logger
 
@@ -68,3 +68,26 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
                                                            user=username,
                                                            password=password)
     return connector
+
+
+def main():
+    """ Connect to db and retrieve all rows in the users """
+
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * from users;")
+    fields = [desc[0] for desc in cursor.description]
+
+    logger = get_logger()
+
+    for row in cursor:
+        str_row = ''.join(f'{field}={str(v)}; ' for v, field in
+                          zip(row, fields))
+        logger.info(str_row.strip())
+
+    cursor.close()
+    db.close()
+
+
+if __name__ == '__main__':
+    main()
