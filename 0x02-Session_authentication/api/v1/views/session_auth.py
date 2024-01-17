@@ -1,4 +1,4 @@
-#!/usr/Abin/eOAnv python3
+#!/usr/bin/env python3
 """ view to handle all routes for the Session authentication
 """
 from api.v1.auth.session_auth import SessionAuth
@@ -10,7 +10,7 @@ import os
 
 @app_views.route("/auth_session/login", methods=["POST"],
                  strict_slashes=False)
-def login():
+def login() -> str:
     """ POST /api/v1/auth_session/login
     Return:
       - The JSON
@@ -38,7 +38,7 @@ def login():
 
 @app_views.route("/auth_session/logout",
                  methods=["DELETE"], strict_slashes=False)
-def logout():
+def logout() -> str:
     """ DELETE api/v1/auth_session/logout
     Return:
       - a JSON
