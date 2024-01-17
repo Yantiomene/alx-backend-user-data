@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/Abin/eOAnv python3
 """ view to handle all routes for the Session authentication
 """
 from api.v1.auth.session_auth import SessionAuth
@@ -34,3 +34,17 @@ def login() -> str:
             resp.set_cookie(session_name, session_id)
             return resp
     return jsonify({"error": "wrong password"}), 401
+
+
+@app_views.route("/auth_session/logout", methods=["DELETE"],
+                 strict_slashes=False)
+def logout() -> bool:
+    """ DELETE api/v1/auth_session/logout
+    Return:
+      - a boolean
+    """
+    from api.v1.app import auth
+    if not auth.destroy_session(request):
+        abort(404)
+
+    return jsonify({}), 200
