@@ -10,7 +10,7 @@ import os
 
 @app_views.route("/auth_session/login", methods=["POST"],
                  strict_slashes=False)
-def login() -> str:
+def login():
     """ POST /api/v1/auth_session/login
     Return:
       - The JSON
@@ -38,13 +38,12 @@ def login() -> str:
 
 @app_views.route("/auth_session/logout", methods=["DELETE"],
                  strict_slashes=False)
-def logout() -> str:
+def logout():
     """ DELETE api/v1/auth_session/logout
     Return:
       - a boolean
     """
     from api.v1.app import auth
-    if not auth.destroy_session(request):
-        abort(404)
-
-    return jsonify({}), 200
+    if auth.destroy_session(request):
+        return jsonify({}), 200
+    abort(404)
