@@ -11,14 +11,14 @@ app = Flask(__name__)
 
 
 @app.route('/', methods=['GET'])
-def index() -> str:
+def index():
     """index route
     """
     return jsonify({"message": "Bienvenue"})
 
 
 @app.route('/users', methods=['POST'])
-def users() -> str:
+def users():
     """Posts a new user
     """
     email = request.form.get('email')
