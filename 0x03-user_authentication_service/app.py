@@ -6,6 +6,8 @@ from flask import Flask, jsonify, request
 from auth import Auth
 
 
+AUTH = Auth()
+
 app = Flask(__name__)
 
 
