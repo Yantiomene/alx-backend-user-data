@@ -44,12 +44,15 @@ class DB:
         """
         if not kwargs:
             raise InvalidRequestError
-
-        user = self._session.query(User).filter_by(**kwargs).first()
-        if not user:
+        try:
+            user = self._session.query(User).filter_by(**kwargs).first()
+            if not user:
+                raise NoResultFound
+            return user
+        except NoResultFound:
             raise NoResultFound
-
-        return user
+        except InvalidRequestError:
+            raise InvalidRequestError
 
     def update_user(self, user_id: int, **kwargs) -> None:
         """Locate and update a user
