@@ -67,4 +67,4 @@ class DB:
             self._session.commit()
             return None
         except Exception:
-            return None
+            pass
